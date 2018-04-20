@@ -7,9 +7,9 @@ yankj12/wiki 需要哪些 API ，请参考 [yankj12/wiki](https://github.com/yan
 # 计划提供的API
 | API URL | 描述 | 交互数据示例 |
 |---|---|---|
-| /api/saveArticle | 保存文章 | [示例](#example-api-saveArticle) |
-| /api/queryArticle?id= | 查询文章 | [示例](#example-api-queryArticle) |
-| /api/searchArticle?key= | 搜索文章 | [示例](#example-api-searchArticle) |
+| /api/saveArticle | 保存文章 | [示例](#example-api-savearticle) |
+| /api/queryArticle?id= | 查询文章 | [示例](#example-api-queryarticle) |
+| /api/searchArticle?key= | 搜索文章 | [示例](#example-api-searcharticle) |
 
 初版api没有采用 RESTful 风格，后续会进行改进
 
