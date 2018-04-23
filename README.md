@@ -16,6 +16,7 @@ yankj12/wiki 需要哪些 API ，请参考 [yankj12/wiki](https://github.com/yan
 ***
 # example-api-saveArticle
 ```
+/api/saveArticle
 request
 {
 	title : '',
@@ -29,12 +30,14 @@ response
 {
 	success : true,
 	errorMsg : '',
-	id : '',
-	title : '',
-	content : '',
-	author : 'jim',
-	insertTime : '2018-04-18 20:00:00',
-	updateTime : '2018-04-18 20:00:00'
+	article : {
+		id : '',
+		title : '',
+		content : '',
+		author : 'jim',
+		insertTime : '2018-04-18 20:00:00',
+		updateTime : '2018-04-18 20:00:00'
+	}
 }
 ```
 
@@ -47,12 +50,14 @@ response
 {
 	success : true,
 	errorMsg : '',
-	id : '',
-	title : '',
-	content : '',
-	author : 'jim',
-	insertTime : '2018-04-18 20:00:00',
-	updateTime : '2018-04-18 20:00:00'
+	article : {
+		id : '',
+		title : '',
+		content : '',
+		author : 'jim',
+		insertTime : '2018-04-18 20:00:00',
+		updateTime : '2018-04-18 20:00:00'
+	}
 }
 ```
 
@@ -68,6 +73,6 @@ response
 	total : 150,
 	pageNo : 1,
 	pageSize : 20,
-	ids : []
+	articleIds : []
 }
 ```
