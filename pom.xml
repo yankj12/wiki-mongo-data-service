@@ -10,28 +10,35 @@
   <name>wiki-mongo-data-service</name>
   <url>http://maven.apache.org</url>
 
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>1.5.2.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+
   <properties>
 	<maven.compiler.source>1.8</maven.compiler.source>  
 	<maven.compiler.target>1.8</maven.compiler.target>  
 	<project.build.sourceEncoding>utf-8</project.build.sourceEncoding> 
   </properties>
   
-  <parent>
-	  <groupId>org.springframework.boot</groupId>
-	  <artifactId>spring-boot-starter-parent</artifactId>
-	  <version>1.5.8.RELEASE</version>
-  </parent>
-  
   <dependencies>
-	<dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-        <scope>test</scope>
-    </dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-eureka-server</artifactId>
+			<scope>test</scope>
+		</dependency>
     <dependency>
         <groupId>com.jayway.jsonpath</groupId>
         <artifactId>json-path</artifactId>
@@ -50,6 +57,18 @@
 	</dependency>
 
   </dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Camden.SR5</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
   
   <build>
         <plugins>
