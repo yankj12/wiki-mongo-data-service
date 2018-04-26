@@ -1,5 +1,7 @@
 package com.cowork.wikidata.controller;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,8 +34,11 @@ public class WikiDataController {
 		if(articalVo != null) {
 			Article article = (Article)SchameCopyUtil.simpleCopy(articalVo, Article.class);
 			if(articalVo.getId() != null && !"".equals(articalVo.getId().trim())) {
+				article.setUpdateTime(new Date());
 				articleMongoDaoUtil.updateArticle(article);
 			}else {
+				article.setInsertTime(new Date());
+				article.setUpdateTime(new Date());
 				String id = articleMongoDaoUtil.insertArticle(article);
 				articalVo.setId(id);
 			}
