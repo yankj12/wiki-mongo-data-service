@@ -1,8 +1,11 @@
 package com.cowork.wikidata.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -75,5 +78,29 @@ public class ArticleMongoDaoUtil {
 		 //Update a Document
 		 collection.updateOne(Filters.eq("_id", doc.get("_id")), new Document("$set", doc));
 		 mongoClient.close();
+	}
+	
+	public Article findArticleById(String id) {
+		Article article = null;
+		if(id!= null && !"".equals(id.trim())) {
+			//To connect to a single MongoDB instance:
+			//You can explicitly specify the hostname and the port:
+			MongoCredential credential = MongoCredential.createCredential(dataSource.getUser(), dataSource.getDbUserDefined(), dataSource.getPassword().toCharArray());
+			MongoClient mongoClient = new MongoClient(new ServerAddress(dataSource.getIp(), dataSource.getPort()),
+			                                         Arrays.asList(credential));
+			//Access a Database
+			MongoDatabase database = mongoClient.getDatabase(dataSource.getDatabase());
+			
+			//Access a Collection
+			MongoCollection<Document> collection = database.getCollection("Article");
+			
+			List<Document> docs = collection.find(Filters.eq("_id", new ObjectId(id))).into(new ArrayList<Document>());
+			if(docs != null && docs.size() > 0) {
+				article = (Article)SchameDocumentUtil.documentToSchame(docs.get(0), Article.class);
+			}
+			mongoClient.close();
+		}
+		
+		return article;
 	}
 }

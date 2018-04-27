@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cowork.common.util.SchameCopyUtil;
@@ -45,6 +46,28 @@ public class WikiDataController {
 			responseVo.setSuccess(true);
 		}
 		responseVo.setArticle(articalVo);
+        return responseVo;
+    }
+	
+	@RequestMapping(value="/api/queryArticle", method=RequestMethod.GET)
+    public ResponseVo queryArticle(@RequestParam String id) {
+		ResponseVo responseVo = new ResponseVo();
+		responseVo.setSuccess(false);
+		responseVo.setErrorMsg(null);
+		
+		if(id != null) {
+			Article article = articleMongoDaoUtil.findArticleById(id);
+			if(article != null){
+				ArticleVo articalVo = (ArticleVo)SchameCopyUtil.simpleCopy(article, ArticleVo.class);
+				responseVo.setArticle(articalVo);
+				
+				responseVo.setSuccess(true);
+			}else{
+				responseVo.setErrorMsg("article not found.");;
+				responseVo.setSuccess(false);
+			}
+		}
+		
         return responseVo;
     }
 	
