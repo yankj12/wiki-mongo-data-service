@@ -1,6 +1,10 @@
 package com.cowork.wikidata.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,4 +75,47 @@ public class WikiDataController {
         return responseVo;
     }
 	
+	@RequestMapping(value="/api/searchArticle", method=RequestMethod.GET)
+    public ResponseVo searchArticle(@RequestParam String key, @RequestParam int pageNo, @RequestParam int pageSize) {
+		ResponseVo responseVo = new ResponseVo();
+		responseVo.setSuccess(false);
+		responseVo.setErrorMsg(null);
+		
+		if(key != null && !"".equals(key.trim())) {
+			Map<String, Object> condition = new HashMap<>();
+			condition.put("title", key);
+			condition.put("content", key);
+			condition.put("author", key);
+			
+			if (pageNo <= 0) {
+				pageNo = 1;
+			}
+			if (pageSize <= 0) {
+				pageSize = 10;
+			}
+			
+			condition.put("page", pageNo);
+			condition.put("rows", pageSize);
+			
+			Long total = articleMongoDaoUtil.countArticleDocumentsByCondition(condition);
+			List<Article> articles = articleMongoDaoUtil.findArticleDocumentsByCondition(condition);
+			
+			if(articles != null){
+				List<ArticleVo> articleVos = new ArrayList<>();
+				for(Article article:articles) {
+					ArticleVo articalVo = (ArticleVo)SchameCopyUtil.simpleCopy(article, ArticleVo.class);
+					articleVos.add(articalVo);
+				}
+				responseVo.setArticles(articleVos);
+				responseVo.setTotal(total.intValue());
+				
+				responseVo.setSuccess(true);
+			}else{
+				responseVo.setErrorMsg("article not found.");;
+				responseVo.setSuccess(false);
+			}
+		}
+		
+        return responseVo;
+    }
 }

@@ -64,7 +64,7 @@ response
 # example-api-searchArticle
 ```
 request
-/api/searchArticle?key=
+/api/searchArticle?key=test&pageNo=1&pageSize=10
 
 response
 {
@@ -73,6 +73,9 @@ response
 	total : 150,
 	pageNo : 1,
 	pageSize : 20,
-	articleIds : []
+	articles : [
+		{},
+		{}
+	]
 }
 ```
