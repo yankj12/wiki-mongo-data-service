@@ -77,6 +77,24 @@ public class WikiDataController {
         return responseVo;
     }
 	
+	@RequestMapping(value="/api/deleteArticle", method=RequestMethod.GET)
+    public ResponseVo deleteArticle(@RequestParam String id) {
+		ResponseVo responseVo = new ResponseVo();
+		responseVo.setSuccess(false);
+		responseVo.setErrorMsg(null);
+		
+		if(id != null && !"".equals(id.trim())) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("validStatus", "0");
+			map.put("updateTime", new Date());
+			
+			articleMongoDaoUtil.updateArticleMultiFieldsById(id, map);
+			responseVo.setSuccess(true);
+		}
+		
+        return responseVo;
+    }
+	
 	@RequestMapping(value="/api/searchArticle", method=RequestMethod.GET)
     public ResponseVo searchArticle(@RequestParam String key, @RequestParam int pageNo, @RequestParam int pageSize) {
 		ResponseVo responseVo = new ResponseVo();
