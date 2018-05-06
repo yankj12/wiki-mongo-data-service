@@ -39,6 +39,8 @@ public class WikiDataController {
 		if(articalVo != null) {
 			Article article = (Article)SchameCopyUtil.simpleCopy(articalVo, Article.class);
 			if(articalVo.getId() != null && !"".equals(articalVo.getId().trim())) {
+				// 避免将insertTime字段进行更新
+				article.setInsertTime(null);
 				article.setUpdateTime(new Date());
 				articleMongoDaoUtil.updateArticle(article);
 			}else {
